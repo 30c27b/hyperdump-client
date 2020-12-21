@@ -1,7 +1,4 @@
-# hyperdump
-
-[![Go Reference](https://pkg.go.dev/badge/30c27b/hyperdump-client.svg)](https://pkg.go.dev/30c27b/hyperdump-client)
-
+# hyperdump-client
 
 Hyperdump is a simple command line utility to save, upload and share files through the internet.
 
@@ -26,6 +23,7 @@ Options:
     -k, --key KEY           Upload the dump at the url [server]/KEY.
     -g, --get               Download a dump hosted at the given INPUT.
     -v, --version           Print the current version of hyperdump.
+    -c, --config            Prompts the configuration panel.
 
 INPUT defaults to the standard input.
 

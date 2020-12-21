@@ -71,5 +71,7 @@ func Prompt() (string, string) {
 		log.Fatal("Error: Could not update the keychain:", err)
 	}
 
+	fmt.Print("\nConfiguration saved successfully.\n")
+
 	return server, token
 }

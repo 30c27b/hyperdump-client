@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/30c27b/hyperdump-client/internal/api"
+	"github.com/30c27b/hyperdump-client/internal/auth"
 )
 
 // Version is the current version of Hyperump
@@ -18,6 +19,7 @@ const usage = `Hyperdump :: files sharing cli
 Usage:
     dump [-k KEY] [-o OUTPUT] [INPUT]
     dump -g [-o OUTPUT] [INPUT]
+    dump -c
     dump -v
 
 Options:
@@ -25,6 +27,7 @@ Options:
     -k, --key KEY           Upload the dump at the url [server]/KEY.
     -g, --get               Download a dump hosted at the given INPUT.
     -v, --version           Print the current version of hyperdump.
+    -c, --config            Prompts the configuration panel.
 
 INPUT defaults to the standard input.
 
@@ -51,14 +54,12 @@ func main() {
 	flag.Usage = func() { fmt.Fprintf(os.Stderr, "%s\n", usage) }
 
 	var (
+		configFlag  bool
 		versionFlag bool
 		getFlag     bool
 		keyFlag     string
 		outFlag     string
 	)
-
-	flag.BoolVar(&versionFlag, "v", false, "Print the current version of hyperdump.")
-	flag.BoolVar(&versionFlag, "version", false, "Print the current version of hyperdump.")
 
 	flag.BoolVar(&getFlag, "g", false, "Download a dump hosted at the given INPUT.")
 	flag.BoolVar(&getFlag, "get", false, "Download a dump hosted at the given INPUT.")
@@ -69,6 +70,12 @@ func main() {
 	flag.StringVar(&outFlag, "o", "", "Write the result to the file given at path OUTPUT.")
 	flag.StringVar(&outFlag, "output", "", "Write the result to the file given at path OUTPUT.")
 
+	flag.BoolVar(&versionFlag, "v", false, "Print the current version of hyperdump.")
+	flag.BoolVar(&versionFlag, "version", false, "Print the current version of hyperdump.")
+
+	flag.BoolVar(&configFlag, "c", false, "Prompts the configuration panel.")
+	flag.BoolVar(&configFlag, "config", false, "Prompts the configuration panel.")
+
 	flag.Parse()
 
 	if flag.NArg() > 1 {
@@ -77,6 +84,11 @@ func main() {
 
 	if versionFlag {
 		fmt.Printf("Hyperdump version %s\n", Version)
+		os.Exit(0)
+	}
+
+	if configFlag {
+		auth.Prompt()
 		os.Exit(0)
 	}
 
