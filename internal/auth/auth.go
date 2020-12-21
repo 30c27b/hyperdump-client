@@ -3,7 +3,6 @@ package auth
 import (
 	"fmt"
 	"log"
-	"net/url"
 	"os/user"
 
 	"golang.org/x/crypto/ssh/terminal"
@@ -25,7 +24,6 @@ func Request() (string, string) {
 	if err != nil {
 		return Prompt()
 	}
-	server = url.QueryEscape(server)
 
 	var token string
 	token, err = keyring.Get(service+":token", u.Name)
